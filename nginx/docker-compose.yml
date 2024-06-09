@@ -1,0 +1,38 @@
+version: '3'
+services:
+  serviceA:
+    container_name: servicea
+    image: 'servicea:latest'
+    ports:
+      - '8081:8081'
+    networks:
+      - backend
+  serviceB:
+    container_name: serviceb
+    image: 'serviceb:latest'
+    ports:
+      - '8082:8082'
+    networks:
+      - backend
+  serviceC:
+    container_name: servicec
+    image: 'servicec:latest'
+    ports:
+      - '8083:8083'
+    networks:
+      - backend
+  nginx:
+    container_name: nginx
+    image: 'nginx:latest'
+    ports:
+      - '80:80'
+    depends_on:
+      - serviceA
+      - serviceB
+      - serviceC
+    networks:
+      - backend
+
+networks: # 가장 기본적인 bridge 네트워크
+  backend:
+    driver: bridge
